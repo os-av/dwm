@@ -11,8 +11,8 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 8;        /* added bar height */
 static const char *fonts[]          = { "terminus:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
 static const char dmenufont[]       = "terminus:size=12";
-static const char col_bar[]         = "#111111"; /* bar */
-static const char col_tabsel[]      = "#292929"; /* selected tab */
+static const char col_bar[]         = "#2d333f"; /* bar */
+static const char col_tabsel[]      = "#63678a"; /* selected tab */
 static const char col_winsel[]      = "#7a7a7a"; /* selected window border */
 static const char col_text[]        = "#e5e5e5"; /* text */
 static const char *colors[][3]      = {
