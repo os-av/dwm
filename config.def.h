@@ -9,16 +9,22 @@ static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 8;        /* added bar height */
-static const char *fonts[]          = { "terminus:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
+static const char *fonts[]          = { "IBMPlexMono:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
 static const char dmenufont[]       = "terminus:size=12";
-static const char col_bar[]         = "#2d333f"; /* bar */
-static const char col_tabsel[]      = "#63678a"; /* selected tab */
+static const char col_bar[]         = "#111111"; /* bar */
+static const char col_tabsel[]      = "#292929"; /* selected tab */
 static const char col_winsel[]      = "#7a7a7a"; /* selected window border */
 static const char col_text[]        = "#e5e5e5"; /* text */
+static const char col_inactive[]    = "#494949";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_text, col_bar,     col_bar },
-	[SchemeSel]  = { col_text, col_tabsel,  col_winsel  },
+	[SchemeNorm]      = { col_text, col_bar,     col_inactive },
+	[SchemeSel]       = { col_text, col_bar,     col_winsel   },
+	[SchemeStatus]    = { col_text, col_bar,     "#000000"    },
+	[SchemeTagsSel]   = { col_text, col_tabsel,  "#000000"    },
+	[SchemeTagsNorm]  = { col_text, col_bar,     "#000000"    },
+	[SchemeInfoSel]   = { col_text, col_tabsel,  "#000000"    },
+	[SchemeInfoNorm]  = { col_text, col_bar,     "#000000"    },
 };
 
 /* tagging */
@@ -35,7 +41,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.635; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.58; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -134,4 +140,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
