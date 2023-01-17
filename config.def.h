@@ -72,7 +72,10 @@ static const char *fmcmd[] = { "pcmanfm", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *miccmd[] = { "amixer", "-q", "set", "Capture", "toggle", NULL };
 static const char *screenshotcmd[] = { "screenshot", NULL };
-
+static const char *mstartcmd[] = { "cmus-remote", "--pause", NULL };
+static const char *mnextcmd[] = { "cmus-remote", "--next", NULL };
+static const char *mprevcmd[] = { "cmus-remote", "--prev", NULL };
+static const char *mstopcmd[] = { "cmus-remote", "--stop", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -87,6 +90,10 @@ static const Key keys[] = {
     { 0,  XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%- unmute; kill -44 $(pidof dwmblocks)") },
     { 0,  XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+ unmute; kill -44 $(pidof dwmblocks)") },
     { 0,  XF86XK_AudioMute,        spawn, SHCMD("amixer set Master toggle; kill -44 $(pidof dwmblocks)")	 },
+	{ 0, XF86XK_AudioPlay, spawn, {.v = mstartcmd} },
+	{ 0, XF86XK_AudioStop, spawn, {.v = mstopcmd} },
+	{ 0, XF86XK_AudioNext, spawn, {.v = mnextcmd} },
+	{ 0, XF86XK_AudioPrev, spawn, {.v = mprevcmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
