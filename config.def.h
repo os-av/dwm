@@ -8,8 +8,8 @@ static const Gap default_gap        = {.isgap = 1, .realgap = 8, .gappx = 8};
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 8;        /* added bar height */
-static const char *fonts[]          = { "IBMPlexMono:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
+static const int user_bh            = 12;        /* added bar height */
+static const char *fonts[]          = { "terminus:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
 static const char dmenufont[]       = "terminus:size=12";
 static const char col_bar[]         = "#111111"; /* bar */
 static const char col_tabsel[]      = "#292929"; /* selected tab */
@@ -41,7 +41,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.58; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.635; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -80,13 +80,13 @@ static const char *mstopcmd[] = { "cmus-remote", "--stop", NULL };
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,						XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,			            XK_e,      spawn,	       {.v = fmcmd } },
 	{ MODKEY,			            XK_r,      spawn,	       {.v = browsercmd } },
     { 0,                            XF86XK_AudioMicMute, spawn,{.v = miccmd } },
     { 0,                            XK_Menu,  spawn,		   {.v = screenshotcmd } },
-	{ 0,  XF86XK_MonBrightnessUp,  spawn, SHCMD("brightnessctl set +10%") },  
-	{ 0,  XF86XK_MonBrightnessDown,spawn, SHCMD("brightnessctl set 10%-") },  
+	{ 0,  XF86XK_MonBrightnessUp,  spawn, SHCMD("brightnessctl set +10%; kill -44 $(pidof dwmblocks)") },  
+	{ 0,  XF86XK_MonBrightnessDown,spawn, SHCMD("brightnessctl set 10%-; kill -44 $(pidof dwmblocks)") },  
     { 0,  XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%- unmute; kill -44 $(pidof dwmblocks)") },
     { 0,  XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+ unmute; kill -44 $(pidof dwmblocks)") },
     { 0,  XF86XK_AudioMute,        spawn, SHCMD("amixer set Master toggle; kill -44 $(pidof dwmblocks)")	 },
@@ -101,7 +101,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.005} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.005} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f = 0.00} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
