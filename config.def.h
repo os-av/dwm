@@ -4,15 +4,15 @@
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 1, .realgap = 8, .gappx = 8};
+static const Gap default_gap        = {.isgap = 0, .realgap = 0, .gappx = 0};
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 12;        /* added bar height */
-static const char *fonts[]          = { "terminus:style=Regular:size=12", "Font Awesome 6 Free:style=Solid:size=10" };
+static const int user_bh            = 16;        /* added bar height */
+static const char *fonts[]          = { "terminus:style=Regular:size=18", "Font Awesome 6 Free:style=Solid:size=13" };
 static const char dmenufont[]       = "terminus:size=12";
-static const char col_bar[]         = "#111111"; /* bar */
-static const char col_tabsel[]      = "#292929"; /* selected tab */
+static const char col_bar[]         = "#000000"; /* bar */
+static const char col_tabsel[]      = "#000000"; /* selected tab */
 static const char col_winsel[]      = "#7a7a7a"; /* selected window border */
 static const char col_text[]        = "#e5e5e5"; /* text */
 static const char col_inactive[]    = "#494949";
@@ -28,7 +28,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -36,12 +36,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.635; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.615; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -79,17 +78,17 @@ static const char *mstopcmd[] = { "cmus-remote", "--stop", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,						XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,			            XK_e,      spawn,	       {.v = fmcmd } },
-	{ MODKEY,			            XK_r,      spawn,	       {.v = browsercmd } },
-    { 0,                            XF86XK_AudioMicMute, spawn,{.v = miccmd } },
-    { 0,                            XK_Menu,  spawn,		   {.v = screenshotcmd } },
-	{ 0,  XF86XK_MonBrightnessUp,  spawn, SHCMD("brightnessctl set +10%; kill -44 $(pidof dwmblocks)") },  
-	{ 0,  XF86XK_MonBrightnessDown,spawn, SHCMD("brightnessctl set 10%-; kill -44 $(pidof dwmblocks)") },  
-    { 0,  XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%- unmute; kill -44 $(pidof dwmblocks)") },
-    { 0,  XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+ unmute; kill -44 $(pidof dwmblocks)") },
-    { 0,  XF86XK_AudioMute,        spawn, SHCMD("amixer set Master toggle; kill -44 $(pidof dwmblocks)")	 },
+	{ MODKEY,           XK_p,      	     spawn, {.v = dmenucmd } },
+	{ MODKEY,			XK_Return, 	     spawn, {.v = termcmd } },
+	{ MODKEY,			XK_e,      	     spawn, {.v = fmcmd } },
+	{ MODKEY,			XK_r,      	     spawn, {.v = browsercmd } },
+    { 0,                XK_Print,  	     spawn, {.v = screenshotcmd } },
+    { 0,  XF86XK_AudioMicMute, spawn, {.v = miccmd } },
+	{ 0,  XF86XK_MonBrightnessUp,  spawn, SHCMD("brightnessctl set +10%; brightness-notify; kill -44 $(pidof dwmblocks)") },  
+	{ 0,  XF86XK_MonBrightnessDown,spawn, SHCMD("brightnessctl set 10%-; brightness-notify; kill -44 $(pidof dwmblocks)") },  
+    { 0,  XF86XK_AudioLowerVolume, spawn, SHCMD("amixer sset Master 5%-; volume-notify; kill -44 $(pidof dwmblocks)") },
+    { 0,  XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer sset Master 5%+; volume-notify; kill -44 $(pidof dwmblocks)") },
+    { 0,  XF86XK_AudioMute,        spawn, SHCMD("amixer set Master toggle; volume-notify; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPlay, spawn, {.v = mstartcmd} },
 	{ 0, XF86XK_AudioStop, spawn, {.v = mstopcmd} },
 	{ 0, XF86XK_AudioNext, spawn, {.v = mnextcmd} },
@@ -97,8 +96,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	// { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	// { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.005} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.005} },
 	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.05} },
@@ -118,8 +117,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -4 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +4 } },
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
 	TAGKEYS(                        XK_1,                      0)
