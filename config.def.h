@@ -4,12 +4,12 @@
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const Gap default_gap        = {.isgap = 0, .realgap = 0, .gappx = 0};
+static const Gap default_gap        = {.isgap = 1, .realgap = 12, .gappx = 12};
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 16;        /* added bar height */
-static const char *fonts[]          = { "terminus:style=Regular:size=18", "Font Awesome 6 Free:style=Solid:size=13" };
+static const int user_bh            = 8;        /* added bar height */
+static const char *fonts[]          = { "IBMPlexMono:style=Regular:size=16", "Font Awesome 6 Free:style=Solid:size=13" };
 static const char dmenufont[]       = "terminus:size=12";
 static const char col_bar[]         = "#000000"; /* bar */
 static const char col_tabsel[]      = "#000000"; /* selected tab */
@@ -40,7 +40,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.615; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.62; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -71,10 +71,10 @@ static const char *fmcmd[] = { "pcmanfm", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 static const char *miccmd[] = { "amixer", "-q", "set", "Capture", "toggle", NULL };
 static const char *screenshotcmd[] = { "screenshot", NULL };
-static const char *mstartcmd[] = { "cmus-remote", "--pause", NULL };
+static const char *mstartcmd[] = { "cmus-pause", NULL };
+static const char *mstopcmd[] = { "cmus-pause", NULL };
 static const char *mnextcmd[] = { "cmus-remote", "--next", NULL };
 static const char *mprevcmd[] = { "cmus-remote", "--prev", NULL };
-static const char *mstopcmd[] = { "cmus-remote", "--stop", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -90,7 +90,7 @@ static const Key keys[] = {
     { 0,  XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer sset Master 5%+; volume-notify; kill -44 $(pidof dwmblocks)") },
     { 0,  XF86XK_AudioMute,        spawn, SHCMD("amixer set Master toggle; volume-notify; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPlay, spawn, {.v = mstartcmd} },
-	{ 0, XF86XK_AudioStop, spawn, {.v = mstopcmd} },
+	{ 0, XF86XK_AudioStop, spawn, {.v = mstartcmd} },
 	{ 0, XF86XK_AudioNext, spawn, {.v = mnextcmd} },
 	{ 0, XF86XK_AudioPrev, spawn, {.v = mprevcmd} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
